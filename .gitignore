@@ -3,6 +3,11 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# data 디렉토리 추적 X
+/data/
+
+.DS_Store
+
 # C extensions
 *.so
 

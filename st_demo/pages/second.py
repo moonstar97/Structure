@@ -6,7 +6,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import requests
 import json
-import folium
 from streamlit_folium import st_folium
 
 st.set_page_config(

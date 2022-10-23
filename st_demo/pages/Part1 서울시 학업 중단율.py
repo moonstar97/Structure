@@ -50,7 +50,7 @@ df_temp = df_temp.reset_index()
 df_temp = df_temp.rename(columns={'index':'name'})
 df_temp = df_temp.drop(0)
 df_temp["name"] = df_temp["name"].map(lambda x: x.split()[0])
-# df_temp
+df_temp
 
 
 st.markdown("## 시각화")

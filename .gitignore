@@ -8,6 +8,7 @@ __pycache__/
 *.pdf
 *.pptx
 /Structure__.png
+/MIDP_Streamlit-main
 
 .DS_Store
 

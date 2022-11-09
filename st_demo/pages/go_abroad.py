@@ -14,25 +14,27 @@ st.set_page_config(
     layout="wide",
 )
 
-st.markdown("# Part1 서울시 구별 학업 중단율")
-
-DATA_URL = "https://raw.githubusercontent.com/wumusill/Structure/main/dataset_eda/seoul_stop_school.csv"
+st.markdown("# 서울시 만 명당 해외 유학 학생 수")
 
 @st.cache(allow_output_mutation=True)
-def load_data():
-    data = pd.read_csv(DATA_URL)
-    data.index = ["2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"]
-    data = data.astype("float")
-    return data
+def load_go_abroad_ratio():
+    ratio = pd.read_csv("https://raw.githubusercontent.com/wumusill/Structure/main/dataset_eda/go_abroad_ratio.csv")
+    return ratio
 
 
-data = load_data()
+ratio = load_go_abroad_ratio()
+ratio = ratio.set_index("시점")
+ratio = ratio.astype("float")
+
+drop_condition = ~ratio.columns.str.contains("소계")
+ratio = ratio.loc[:, drop_condition]
+
 
 st.markdown("## 조회 학교")
 # 학교 조건
 selected_school = st.selectbox("학교", ["초등학교", "중학교", "고등학교"])
-condition = data.columns.str.contains(f"{selected_school} 학업중단율")
-school_data = data.loc[:, condition]
+condition = ratio.columns.str.contains(f"{selected_school}")
+school_data = ratio.loc[:, condition]
 
 if st.checkbox('Show data'):
     st.subheader('data')
@@ -41,8 +43,8 @@ if st.checkbox('Show data'):
 
 st.markdown("## 조회 연도")
 # 연도 조건
-year_to_filter = st.slider('연도', 2011, 2020, 2015)
-year_condition = school_data.index == str(year_to_filter)
+year_to_filter = st.slider('연도', 2012, 2020, 2015)
+year_condition = school_data.index == year_to_filter
 year_school_data = school_data[year_condition].T
 
 df_temp = year_school_data
@@ -77,7 +79,7 @@ m.choropleth(geo_data=geo_json,
                  fill_color='YlGn',
                  fill_opacity=0.7,
                  line_opacity=0.2,
-                 legend_name="구별 학업 중단율"
+                 legend_name=""
                  )
 
 

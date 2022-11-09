@@ -5,6 +5,10 @@ __pycache__/
 
 # data 디렉토리 추적 X
 /data/
+*.pdf
+*.pptx
+/Structure__.png
+/MIDP_Streamlit-main
 
 .DS_Store
 
